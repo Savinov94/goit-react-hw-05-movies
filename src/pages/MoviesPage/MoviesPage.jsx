@@ -1,8 +1,12 @@
+import Search from 'components/Search/Search';
+import React from 'react';
 
 const MoviesPage = () => {
   return (
-    <div>MoviesPage</div>
-  )
-}
+    <div>
+      <Search />
+    </div>
+  );
+};
 
-export default MoviesPage
+export default MoviesPage;

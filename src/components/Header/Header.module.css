@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: aliceblue;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li {
+  font-size: 18px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: aliceblue;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #ffd700;
+}

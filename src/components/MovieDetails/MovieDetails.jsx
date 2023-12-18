@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
-import { getMovieDetails } from '../../servises/eventsApi';
-import Cast from 'components/Cast/Cast';
-import Rewiews from 'components/Rewiews/Rewiews';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
+
+import css from './MovieDetails.module.css';
+import { getMovieDetails } from 'servises/eventsApi';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -12,7 +12,6 @@ const MovieDetails = () => {
     const fetchData = async () => {
       try {
         const detailsData = await getMovieDetails(movieId);
-
         setDetails(detailsData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -23,22 +22,30 @@ const MovieDetails = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <div className={css.container}>
+      <Link to="/movies" className={css.goBackLink}>
+        Go Back
+      </Link>
       {details && (
-        <div>
-          <img src={`https://image.tmdb.org/t/p/original${details.backdrop_path} `} alt={details.id} width="500" />
-          <h2>{details.title}</h2>
-          <p>Огляд: {details.overview}</p>
-          <p>Рейтинг: {details.vote_average}</p>
+        <div className={css.movieDetails}>
+          <img
+            src={`https://image.tmdb.org/t/p/original${details.backdrop_path} `}
+            alt={details.id}
+            className={css.movieImage}
+          />
+          <h2 className={css.movieTitle}>{details.title}</h2>
+          <p className={css.overview}>{details.overview}</p>
+          <p className={css.rating}>⭐ {details.vote_average}</p>
         </div>
       )}
 
-      <NavLink>
-        <Cast to="cast">Cast</Cast>
+      <NavLink to="cast" className={css.castLink}>
+        Cast
       </NavLink>
-      <NavLink>
-        <Rewiews to="reviews" />
+      <NavLink to="reviews" className={css.reviewsLink}>
+        Reviews
       </NavLink>
+
       <Outlet />
     </div>
   );
