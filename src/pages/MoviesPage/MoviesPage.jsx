@@ -10,7 +10,7 @@ const MoviesPage = () => {
   const [searchExecuted, setSearchExecuted] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
- 
+  console.log(searchQuery);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
