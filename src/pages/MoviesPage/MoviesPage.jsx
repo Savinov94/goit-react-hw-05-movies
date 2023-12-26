@@ -5,11 +5,12 @@ import MovieList from 'components/MovieList/MovieList';
 import { searchMovies } from 'servises/eventsApi';
 
 const MoviesPage = () => {
-  const [setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [searchExecuted, setSearchExecuted] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+ 
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
