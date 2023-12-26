@@ -22,7 +22,7 @@ const MoviesPage = () => {
         .then(results => setSearchResults(results))
         .catch(error => console.error('Error during search:', error));
     }
-  }, [location.search]);
+  }, [location.search, setSearchQuery]);
 
   const handleSearch = query => {
     setSearchQuery(query);
