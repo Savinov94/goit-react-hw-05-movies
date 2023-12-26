@@ -5,7 +5,7 @@ import MovieList from 'components/MovieList/MovieList';
 import { searchMovies } from 'servises/eventsApi';
 
 const MoviesPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [searchExecuted, setSearchExecuted] = useState(false);
   const navigate = useNavigate();
