@@ -24,15 +24,21 @@ const Reviews = () => {
   return (
     <div>
       <h2>Reviews</h2>
-      {reviews && (
-        <ul className={css.reviewsList}>
-          {reviews.results.map(review => (
-            <li key={review.id} className={css.reviewItem}>
-              <p className={css.authorName}>{review.author}</p>
-              <p className={css.reviewContent}>{review.content}</p>
-            </li>
-          ))}
-        </ul>
+      {reviews ? (
+        reviews.results.length > 0 ? (
+          <ul className={css.reviewsList}>
+            {reviews.results.map(review => (
+              <li key={review.id} className={css.reviewItem}>
+                <p className={css.authorName}>{review.author}</p>
+                <p className={css.reviewContent}>{review.content}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No reviews available.</p>
+        )
+      ) : (
+        <p>Loading...</p>
       )}
     </div>
   );

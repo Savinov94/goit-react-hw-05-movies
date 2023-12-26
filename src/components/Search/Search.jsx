@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import css from './Search.module.css';
 import { searchMovies } from 'servises/eventsApi';
+import MovieList from '../MovieList/MovieList';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [searchExecuted, setSearchExecuted] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputChange = event => {
     setSearchQuery(event.target.value);
@@ -19,10 +22,23 @@ const Search = () => {
       const results = await searchMovies(searchQuery);
       setSearchResults(results);
       setSearchExecuted(true);
+
+      navigate(`/movies?query=${searchQuery}`);
     } catch (error) {
       console.error('Error during search:', error);
     }
   };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const queryParam = urlParams.get('query');
+    const movieId = urlParams.get('id');
+
+    if (queryParam && movieId) {
+      console.log('Search query:', queryParam);
+      console.log('Selected movie ID:', movieId);
+    }
+  }, [location.search]);
 
   return (
     <div className={css.searchContainer}>
@@ -44,27 +60,12 @@ const Search = () => {
       searchResults.results &&
       searchResults.results.length > 0 ? (
         <div>
-          <ul className={css.resultsList}>
-            {searchResults.results.map(movie => (
-              <li key={movie.id} className={css.resultsItem}>
-                <NavLink to={`/movies/${movie.id}`} className={css.navSearch}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${movie.backdrop_path} `}
-                    alt={movie.id}
-                    className={css.movieImage}
-                  />
-                  <div>
-                    <h2 className={css.movieTitle}>{movie.title}</h2>
-                    <p className={css.rating}>⭐ {movie.vote_average}</p>
-                    <p className={css.overview}>{movie.overview}</p>
-                  </div>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          <MovieList movies={searchResults.results} />
         </div>
       ) : (
-        searchExecuted && <p className={css.noResults}>No results found</p>
+        searchExecuted && (
+          <p className={css.noResults}>Результати не знайдені</p>
+        )
       )}
     </div>
   );

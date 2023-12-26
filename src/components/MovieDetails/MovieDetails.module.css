@@ -21,7 +21,6 @@
 }
 
 .goBackLink:hover {
-  text-decoration: underline;
   color: #ffd700;
 }
 
@@ -87,4 +86,13 @@
 
 .castLink:hover {
   color: #ffd700;
+}
+.genres {
+  margin-bottom: 15px;
+}
+
+.genresTitle {
+}
+.genresText {
+  font-size: 16px;
 }

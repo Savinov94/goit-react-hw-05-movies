@@ -28,43 +28,4 @@
   text-decoration: none;
 }
 
-.resultsList {
-  margin-left: 15px;
-  list-style: none;
-  padding: 0;
-}
 
-.resultsItem {
-  margin-bottom: 10px;
-}
-
-.noResults {
-  color: #ff0000;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.movieImage {
-  width: 100%;
-  max-width: 250px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  margin-right: 10px;
-}
-
-.movieTitle {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.movieTitle:hover {
-  color: #ffd700;
-}
-
-.navSearch {
-  display: flex;
-  text-decoration: none;
-  color: black;
-}

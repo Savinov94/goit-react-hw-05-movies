@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
-
+import { Outlet, useParams, useNavigate, NavLink } from 'react-router-dom';
+import placeholderImage from '../img/kino.jpg';
 import css from './MovieDetails.module.css';
 import { getMovieDetails } from 'servises/eventsApi';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [details, setDetails] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,21 +22,39 @@ const MovieDetails = () => {
     fetchData();
   }, [movieId]);
 
+  const handleGoBack = () => {
+    navigate(-1, {
+      state: {
+        searchQuery: new URLSearchParams(window.location.search).get('query'),
+      },
+    });
+  };
+
   return (
     <div className={css.container}>
-      <Link to="/movies" className={css.goBackLink}>
+      <button onClick={handleGoBack} className={css.goBackLink}>
         Go Back
-      </Link>
+      </button>
       {details && (
         <div className={css.movieDetails}>
           <img
-            src={`https://image.tmdb.org/t/p/original${details.backdrop_path} `}
+            src={`https://image.tmdb.org/t/p/original${details.backdrop_path}`}
             alt={details.id}
+            onError={e => {
+              e.target.src = placeholderImage;
+            }}
             className={css.movieImage}
           />
           <h2 className={css.movieTitle}>{details.title}</h2>
           <p className={css.overview}>{details.overview}</p>
           <p className={css.rating}>⭐ {details.vote_average}</p>
+
+          {details.genres && (
+            <div className={css.genres}>
+              <h3 className={css.genresTitle}>Genres:</h3>
+              <span>{details.genres.map(genre => genre.name).join(', ')}</span>
+            </div>
+          )}
         </div>
       )}
 
@@ -45,7 +64,6 @@ const MovieDetails = () => {
       <NavLink to="reviews" className={css.reviewsLink}>
         Reviews
       </NavLink>
-
       <Outlet />
     </div>
   );
