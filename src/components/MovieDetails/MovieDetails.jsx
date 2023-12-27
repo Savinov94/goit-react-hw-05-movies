@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, useParams, useNavigate, NavLink } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Outlet,
+  useParams,
+  NavLink,
+  Link,
+  useLocation,
+} from 'react-router-dom';
 import placeholderImage from '../img/kino.jpg';
 import css from './MovieDetails.module.css';
 import { getMovieDetails } from 'servises/eventsApi';
@@ -7,8 +13,7 @@ import { getMovieDetails } from 'servises/eventsApi';
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [details, setDetails] = useState(null);
-  const navigate = useNavigate();
-
+  const location = useLocation();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,19 +27,14 @@ const MovieDetails = () => {
     fetchData();
   }, [movieId]);
 
-  const handleGoBack = () => {
-    navigate(-1, {
-      state: {
-        searchQuery: new URLSearchParams(window.location.search).get('query'),
-      },
-    });
-  };
-
+  const backLinkHref = useRef(location.state?.from ?? '/movies');
   return (
     <div className={css.container}>
-      <button onClick={handleGoBack} className={css.goBackLink}>
-        Go Back
-      </button>
+      <Link to={backLinkHref.current}>
+        <button type="button" className={css.goBackLink}>
+          Go back
+        </button>
+      </Link>
       {details && (
         <div className={css.movieDetails}>
           <img
