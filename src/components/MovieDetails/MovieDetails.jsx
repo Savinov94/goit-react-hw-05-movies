@@ -49,7 +49,7 @@ const MovieDetails = () => {
           <p className={css.overview}>{details.overview}</p>
           <p className={css.rating}>⭐ {details.vote_average}</p>
 
-          {details.genres && (
+          {details.genres && details.genres.length > 0 && (
             <div className={css.genres}>
               <h3 className={css.genresTitle}>Genres:</h3>
               <span>{details.genres.map(genre => genre.name).join(', ')}</span>
